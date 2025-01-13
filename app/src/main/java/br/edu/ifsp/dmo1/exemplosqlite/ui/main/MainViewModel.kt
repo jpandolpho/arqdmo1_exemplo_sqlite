@@ -23,7 +23,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
     }
 
     fun addDado(texto: String) {
-        repository.addMeuDado(MeuDado(texto))
+        repository.addMeuDado(MeuDado(-1, texto))
         load()
     }
 }
