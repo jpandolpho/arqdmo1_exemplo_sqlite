@@ -22,6 +22,7 @@ class MeuDadoAdapter (private var dataset: List<MeuDado>) : RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dado = dataset[position]
+        holder.binding.textIdDado.setText("(${dado.id})")
         holder.binding.textTextoDado.setText(dado.texto)
     }
 
