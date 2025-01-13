@@ -14,12 +14,12 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_KEYS
     }
 
     private companion object {
-        const val CREATE_TABLE = "CREATE TABLE ${DATABASE_KEYS.TABLE_NAME} (${DATABASE_KEYS.COLUMN_TEXTO} TEXT)"
+        const val CREATE_TABLE_V1 = "CREATE TABLE ${DATABASE_KEYS.TABLE_NAME} (${DATABASE_KEYS.COLUMN_TEXTO} TEXT)"
         const val DROP_TABLE = "DROP TABLE IF EXISTS ${DATABASE_KEYS.TABLE_NAME}";
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL(CREATE_TABLE)
+        db.execSQL(CREATE_TABLE_V1)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
