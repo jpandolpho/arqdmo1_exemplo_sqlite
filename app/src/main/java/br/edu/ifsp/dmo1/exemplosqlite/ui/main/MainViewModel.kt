@@ -18,8 +18,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
         repository = MeuDadoRepository(application)
     }
 
+    fun load() {
+        _dados.value = repository.getAllMeusDados()
+    }
+
     fun addDado(texto: String) {
         repository.addMeuDado(MeuDado(texto))
-        _dados.value = repository.getAllMeusDados()
+        load()
     }
 }
