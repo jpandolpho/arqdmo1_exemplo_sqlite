@@ -1,7 +1,6 @@
 package br.edu.ifsp.dmo1.exemplosqlite.data.database
 
 import android.content.ContentValues
-import android.content.Context
 import br.edu.ifsp.dmo1.exemplosqlite.data.model.MeuDado
 
 class MeuDadoDao(private val dbHelper: DatabaseHelper) {
@@ -16,7 +15,11 @@ class MeuDadoDao(private val dbHelper: DatabaseHelper) {
 
     fun getAll(): List<MeuDado> {
         val db = dbHelper.readableDatabase
-        val columns = arrayOf(DatabaseHelper.DATABASE_KEYS.COLUMN_TEXTO)
+        val columns = arrayOf(
+            DatabaseHelper.DATABASE_KEYS.COLUMN_ID,
+            DatabaseHelper.DATABASE_KEYS.COLUMN_TEXTO
+        )
+
         val cursor = db.query(DatabaseHelper.DATABASE_KEYS.TABLE_NAME,
             columns,
             null,
@@ -29,7 +32,7 @@ class MeuDadoDao(private val dbHelper: DatabaseHelper) {
         cursor.use {
             while (it.moveToNext()) {
                 dados.add(
-                    MeuDado(texto = it.getString(0))
+                    MeuDado(id = it.getInt(0), texto = it.getString(1))
                 )
             }
         }
