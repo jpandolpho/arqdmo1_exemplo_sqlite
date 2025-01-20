@@ -1,10 +1,13 @@
 package br.edu.ifsp.dmo1.exemplosqlite.ui.main
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -41,6 +44,10 @@ class MainActivity : AppCompatActivity(), ItemListDadoClickListener {
         updateResultLauncher.launch(mIntent)
     }
 
+    override fun clickDeleteItemList(id: Int) {
+        viewModel.notifyDelete(id)
+    }
+
     private fun setupLauncher() {
         addResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
@@ -75,6 +82,14 @@ class MainActivity : AppCompatActivity(), ItemListDadoClickListener {
         viewModel.dados.observe(this, Observer {
             adapter.updateDados(it)
         })
+
+        viewModel.toDeleteTexto.observe(this, Observer {
+            showDeleteConfirm(it)
+        })
+
+        viewModel.deleted.observe(this, Observer {
+            Toast.makeText(this, "Dado apagado com sucesso.", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun setupRecyclerView() {
@@ -83,5 +98,20 @@ class MainActivity : AppCompatActivity(), ItemListDadoClickListener {
         binding.listDados.layoutManager = LinearLayoutManager(this)
     }
 
+    private fun showDeleteConfirm(texto: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirmação de Exclusão")
+        builder.setMessage("Tem certeza que deseja apagar o Dado: $texto?")
 
+        builder.setPositiveButton("Excluir", DialogInterface.OnClickListener { dialog, which ->
+            viewModel.confirmDelete()
+            dialog.dismiss()
+        })
+
+        builder.setNeutralButton("Cancelar", DialogInterface.OnClickListener { dialog, which ->
+            dialog.dismiss()
+        })
+
+        builder.create().show()
+    }
 }
