@@ -39,4 +39,21 @@ class MeuDadoDao(private val dbHelper: DatabaseHelper) {
 
         return dados
     }
+
+    fun update(meuDado: MeuDado) {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put(DatabaseHelper.DATABASE_KEYS.COLUMN_TEXTO, meuDado.texto)
+        }
+
+        val where = "${DatabaseHelper.DATABASE_KEYS.COLUMN_ID} = ?"
+        val whereArgs = arrayOf(meuDado.id.toString())
+
+        db.update(
+            DatabaseHelper.DATABASE_KEYS.TABLE_NAME,
+            values,
+            where,
+            whereArgs
+        )
+    }
 }
