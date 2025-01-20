@@ -8,7 +8,7 @@ import br.edu.ifsp.dmo1.exemplosqlite.data.model.MeuDado
 import br.edu.ifsp.dmo1.exemplosqlite.data.repository.MeuDadoRepository
 
 class MainViewModel(application: Application) : AndroidViewModel(application){
-    private lateinit var repository: MeuDadoRepository
+    private var repository: MeuDadoRepository
 
     private val _dados = MutableLiveData<List<MeuDado>>()
     val dados: LiveData<List<MeuDado>>
@@ -24,6 +24,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
 
     fun addDado(texto: String) {
         repository.addMeuDado(MeuDado(-1, texto))
+        load()
+    }
+
+    fun updateDado(id: Int, texto: String) {
+        repository.updateMeuDado(MeuDado(id,texto))
         load()
     }
 }
