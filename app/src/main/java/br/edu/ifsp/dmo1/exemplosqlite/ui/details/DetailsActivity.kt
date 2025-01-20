@@ -35,9 +35,11 @@ class DetailsActivity : AppCompatActivity(), OnClickListener {
     override fun onClick(v: View) {
         if (v.id == binding.buttonSave.id) {
             val string = binding.textTexto.text.toString()
+            val numero = binding.textNumero.text.toString().toInt()
             if (string.isNotEmpty()) {
                 val mIntent = Intent()
                 mIntent.putExtra("texto", string)
+                mIntent.putExtra("numero", numero)
 
                 if (binding.buttonSave.text.toString().equals("Atualizar")){
                     val id = binding.textId.text.toString().toInt()
@@ -57,11 +59,13 @@ class DetailsActivity : AppCompatActivity(), OnClickListener {
         if (intent.extras != null) {
             val id = intent.getIntExtra("id", -1)
             val texto = intent.getStringExtra("texto")
+            val numero = intent.getIntExtra("numero", -2)
 
             binding.buttonSave.setText("Atualizar")
             binding.textlayoutId.visibility = VISIBLE
             binding.textId.setText(id.toString())
             binding.textTexto.setText(texto)
+            binding.textNumero.setText(numero.toString())
         }
     }
 }
