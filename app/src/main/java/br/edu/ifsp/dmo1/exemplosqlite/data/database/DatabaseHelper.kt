@@ -8,10 +8,11 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_KEYS
 
     object DATABASE_KEYS {
         const val DATABASE_NAME = "exemplo_database.db"
-        const val DATABASE_VERSION = 2
+        const val DATABASE_VERSION = 3
         const val TABLE_NAME = "tb_meu_dado"
         const val COLUMN_ID = "id"
         const val COLUMN_TEXTO = "texto"
+        const val COLUMN_NUMERO = "numero"
     }
 
     private companion object {
@@ -19,18 +20,25 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_KEYS
         const val CREATE_TABLE_V2 = "CREATE TABLE ${DATABASE_KEYS.TABLE_NAME} (" +
                 "${DATABASE_KEYS.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "${DATABASE_KEYS.COLUMN_TEXTO} TEXT NOT NULL)"
+        const val CREATE_TABLE_V3 = "CREATE TABLE ${DATABASE_KEYS.TABLE_NAME} (" +
+                "${DATABASE_KEYS.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "${DATABASE_KEYS.COLUMN_TEXTO} TEXT NOT NULL, " +
+                "${DATABASE_KEYS.COLUMN_NUMERO} INTEGER )"
 
         const val DROP_TABLE = "DROP TABLE IF EXISTS ${DATABASE_KEYS.TABLE_NAME}";
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL(CREATE_TABLE_V2)
+        db.execSQL(CREATE_TABLE_V3)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         when {
             oldVersion < 2 -> {
                 updateToVersion2(db)
+            }
+            oldVersion < 3 -> {
+                updateToVersion3(db)
             }
         }
     }
@@ -46,7 +54,14 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_KEYS
                 "FROM ${DATABASE_KEYS.TABLE_NAME}_OLD"
         db.execSQL(sql)
 
-        sql = "${DROP_TABLE}_OLD"
+        sql = "DROP TABLE ${DATABASE_KEYS.TABLE_NAME}_OLD"
+        db.execSQL(sql)
+    }
+
+    private fun updateToVersion3(db: SQLiteDatabase) {
+        val sql =  "ALTER TABLE ${DATABASE_KEYS.TABLE_NAME} " +
+                "ADD COLUMN ${DATABASE_KEYS.COLUMN_NUMERO} INTEGER DEFAULT -1"
+
         db.execSQL(sql)
     }
 }
