@@ -24,8 +24,9 @@ class MeuDadoAdapter (private var dataset: List<MeuDado>,private val listener: I
         val dado = dataset[position]
         holder.binding.textIdDado.setText("(${dado.id})")
         holder.binding.textTextoDado.setText(dado.texto)
+        holder.binding.textNumeroDado.setText("(${dado.numero})")
         holder.binding.imageEditDado.setOnClickListener{
-            listener.clickEditItemList(dado.id, dado.texto)
+            listener.clickEditItemList(dado.id, dado.texto, dado.numero)
         }
         holder.binding.imageDeleteDado.setOnClickListener{
             listener.clickDeleteItemList(dado.id)

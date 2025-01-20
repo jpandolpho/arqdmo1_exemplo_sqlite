@@ -29,6 +29,18 @@
         app:layout_constraintStart_toEndOf="@id/text_id_dado"
         app:layout_constraintTop_toTopOf="@id/text_id_dado" />
 
+    <TextView
+        android:id="@+id/text_numero_dado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="1"
+        android:textColor="#9C27B0"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/text_texto_dado"
+        app:layout_constraintTop_toTopOf="@id/text_id_dado"/>
+
     <ImageView
         android:id="@+id/image_edit_dado"
         android:layout_width="40dp"
