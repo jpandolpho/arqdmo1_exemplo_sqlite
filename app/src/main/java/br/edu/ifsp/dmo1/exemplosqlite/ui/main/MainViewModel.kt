@@ -29,13 +29,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application){
         _dados.value = repository.getAllMeusDados()
     }
 
-    fun addDado(texto: String) {
-        repository.addMeuDado(MeuDado(-1, texto))
+    fun addDado(texto: String, numero: Int) {
+        repository.addMeuDado(MeuDado(-1, texto, numero))
         load()
     }
 
-    fun updateDado(id: Int, texto: String) {
-        repository.updateMeuDado(MeuDado(id,texto))
+    fun updateDado(id: Int, texto: String, numero: Int) {
+        repository.updateMeuDado(MeuDado(id, texto, numero))
         load()
     }
 

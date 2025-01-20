@@ -37,10 +37,11 @@ class MainActivity : AppCompatActivity(), ItemListDadoClickListener {
         viewModel.load()
     }
 
-    override fun clickEditItemList(id: Int, texto: String) {
+    override fun clickEditItemList(id: Int, texto: String, numero: Int) {
         val mIntent = Intent(this, DetailsActivity::class.java)
         mIntent.putExtra("id", id)
         mIntent.putExtra("texto", texto)
+        mIntent.putExtra("numero", numero)
         updateResultLauncher.launch(mIntent)
     }
 
@@ -54,7 +55,8 @@ class MainActivity : AppCompatActivity(), ItemListDadoClickListener {
             ActivityResultCallback {
                 if (it.resultCode == RESULT_OK) {
                     val texto = it.data?.getStringExtra("texto") ?: ""
-                    viewModel.addDado(texto)
+                    val numero = it.data?.getIntExtra("numero", -2) ?: -2
+                    viewModel.addDado(texto, numero)
                 }
             }
         )
@@ -65,7 +67,8 @@ class MainActivity : AppCompatActivity(), ItemListDadoClickListener {
                 if (it.resultCode == RESULT_OK) {
                     val texto = it.data?.getStringExtra("texto") ?: ""
                     val id = it.data?.getIntExtra("id", -1) ?: -1
-                    viewModel.updateDado(id, texto)
+                    val numero = it.data?.getIntExtra("numero", -1) ?: -2
+                    viewModel.updateDado(id, texto, numero)
                 }
             }
         )
