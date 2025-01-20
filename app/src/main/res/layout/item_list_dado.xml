@@ -28,4 +28,16 @@
         app:layout_constraintStart_toEndOf="@id/text_id_dado"
         app:layout_constraintTop_toTopOf="@id/text_id_dado" />
 
+    <ImageView
+        android:id="@+id/image_edit_dado"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintBottom_toBottomOf="@id/text_id_dado"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_id_dado"
+        app:tint="#9C27B0" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
