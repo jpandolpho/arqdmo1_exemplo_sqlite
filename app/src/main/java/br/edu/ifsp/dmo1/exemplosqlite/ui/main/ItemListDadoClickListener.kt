@@ -4,4 +4,6 @@ interface ItemListDadoClickListener {
 
     fun clickEditItemList(id: Int, texto: String)
 
+    fun clickDeleteItemList(id: Int)
+
 }
