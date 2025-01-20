@@ -40,6 +40,38 @@ class MeuDadoDao(private val dbHelper: DatabaseHelper) {
         return dados
     }
 
+    fun getById(id: Int): MeuDado? {
+        val dado: MeuDado?
+        val db = dbHelper.readableDatabase
+        val columns = arrayOf(
+            DatabaseHelper.DATABASE_KEYS.COLUMN_ID,
+            DatabaseHelper.DATABASE_KEYS.COLUMN_TEXTO
+        )
+
+        val where = "${DatabaseHelper.DATABASE_KEYS.COLUMN_ID} = ?"
+        val whereArgs = arrayOf(id.toString())
+
+        val cursor = db.query(
+            DatabaseHelper.DATABASE_KEYS.TABLE_NAME,
+            columns,
+            where,
+            whereArgs,
+            null,
+            null,
+            null
+        )
+
+        cursor.use {
+            dado = if (cursor.moveToNext()) {
+                MeuDado(cursor.getInt(0), cursor.getString(1))
+            }else {
+                null
+            }
+        }
+
+        return dado
+    }
+
     fun update(meuDado: MeuDado) {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
@@ -52,6 +84,17 @@ class MeuDadoDao(private val dbHelper: DatabaseHelper) {
         db.update(
             DatabaseHelper.DATABASE_KEYS.TABLE_NAME,
             values,
+            where,
+            whereArgs
+        )
+    }
+
+    fun delete(meuDado: MeuDado) {
+        val where = "${DatabaseHelper.DATABASE_KEYS.COLUMN_ID} = ?"
+        val whereArgs = arrayOf(meuDado.id.toString())
+        val db = dbHelper.writableDatabase
+        db.delete(
+            DatabaseHelper.DATABASE_KEYS.TABLE_NAME,
             where,
             whereArgs
         )
