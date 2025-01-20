@@ -27,6 +27,9 @@ class MeuDadoAdapter (private var dataset: List<MeuDado>,private val listener: I
         holder.binding.imageEditDado.setOnClickListener{
             listener.clickEditItemList(dado.id, dado.texto)
         }
+        holder.binding.imageDeleteDado.setOnClickListener{
+            listener.clickDeleteItemList(dado.id)
+        }
     }
 
     override fun getItemCount(): Int {
